@@ -4,9 +4,10 @@
 <section class="arden-dtf-hub" aria-labelledby="arden-dtf-hub-title">
   <div class="arden-dtf-hub__inner">
   <div class="arden-dtf-hub__head">
-    <p class="arden-section-eyebrow">For decorators &amp; shops</p>
-    <h2 id="arden-dtf-hub-title" class="arden-display arden-dtf-hub__title">DTF tools &amp; transfer options</h2>
-    <p class="arden-dtf-hub__sub">Perfect alongside POD — size transfers, build gang sheets, or upload print-ready art. Same-day style turnaround on many jobs; full tools on <a href="https://ardensprint.com/" rel="noopener noreferrer">ardensprint.com</a>.</p>
+    <p class="arden-section-eyebrow">{l s='DTF transfers' d='Shop.Theme.Catalog'}</p>
+    <h2 id="arden-dtf-hub-title" class="arden-display arden-dtf-hub__title">{l s='Your DTF printing hub' d='Shop.Theme.Catalog'}</h2>
+    <p class="arden-dtf-hub__kicker">{l s='Ready in 24 hours — pick your perfect option below' d='Shop.Theme.Catalog'}</p>
+    <p class="arden-dtf-hub__sub">{l s='Size transfers, build gang sheets, or upload print-ready art. Interactive builders and the full workflow live on' d='Shop.Theme.Catalog'} <a href="https://ardensprint.com/" rel="noopener noreferrer">ardensprint.com</a>.</p>
   </div>
   <div class="arden-dtf-hub__grid">
     <a class="arden-dtf-card" href="{$arden_dtf_tools.dtf_size|default:$urls['pages']['new_products']}">

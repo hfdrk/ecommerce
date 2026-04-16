@@ -12,7 +12,7 @@ class Ardenhomelinks extends Module
     {
         $this->name = 'ardenhomelinks';
         $this->tab = 'front_office_features';
-        $this->version = '1.1.1';
+        $this->version = '1.2.0';
         $this->author = 'Arden';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -79,12 +79,25 @@ class Ardenhomelinks extends Module
             $cmsUrls[$key] = $idCms ? $link->getCMSLink((int) $idCms) : '#';
         }
 
+        $legalMap = [
+            'privacy' => 'privacy-policy',
+            'terms' => 'terms-conditions',
+            'returns' => 'returns-policy',
+        ];
+        $legalUrls = [];
+        foreach ($legalMap as $key => $rewrite) {
+            $idCms = $this->findCmsIdByRewrite($rewrite, $idLang, (int) $this->context->shop->id);
+            $legalUrls[$key] = $idCms ? $link->getCMSLink((int) $idCms) : '#';
+        }
+
         $this->context->smarty->assign([
             'arden_cat' => $urls,
             'arden_dtf_tools' => $dtfToolUrls,
             'arden_cms' => $cmsUrls,
+            'arden_legal' => $legalUrls,
             'arden_catalog' => $link->getPageLink('new-products'),
             'arden_shop' => $link->getPageLink('new-products'),
+            'arden_pod' => $link->getPageLink('new-products'),
             'arden_contact' => $link->getPageLink('contact'),
         ]);
 

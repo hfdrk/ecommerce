@@ -10,6 +10,7 @@
     {block name='page_content'}
       {include file='_partials/arden-hero.tpl'}
       {include file='_partials/arden-trust-signals.tpl'}
+      {include file='_partials/arden-category-tiles.tpl'}
       <div class="arden-home-modules">
         <header class="arden-home-modules__head">
           <p class="arden-section-eyebrow">Shop</p>
@@ -22,6 +23,7 @@
       </div>
       {include file='_partials/arden-pillars.tpl'}
       {include file='_partials/arden-value-props.tpl'}
+      {include file='_partials/arden-custom-printing-cta.tpl'}
       {include file='_partials/arden-cta-strip.tpl'}
       {include file='_partials/arden-dtf-hub.tpl'}
       {include file='_partials/arden-blank-banner.tpl'}

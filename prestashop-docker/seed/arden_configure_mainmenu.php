@@ -1,7 +1,7 @@
 <?php
 /**
  * Replaces default demo main menu (Clothes, Accessories, Art) with Arden-style items
- * aligned with https://ardensprint.com/ — DTF Transfers, Blanks, Shop, About Us, Contact.
+ * aligned with https://ardensprint.com/ — DTF, Blanks, Custom print (print-services), Shop, About, Contact.
  *
  * Run inside the shop container as www-data:
  *   php /var/www/html/seed/arden_configure_mainmenu.php
@@ -41,13 +41,22 @@ if (!$link) {
 $idDtf = (int) categoryIdByRewrite('dtf-transfers', $idLangDefault);
 $idBlanks = (int) categoryIdByRewrite('blanks-catalog', $idLangDefault);
 $idAbout = (int) cmsIdByRewrite('about-us', $idLangDefault, $idShop);
+if (!$idAbout) {
+    $idAbout = (int) cmsIdByRewrite('about', $idLangDefault, $idShop);
+}
+
+$idPsvc = (int) categoryIdByRewrite('print-services', $idLangDefault);
 
 if (!$idDtf || !$idBlanks) {
     fwrite(STDERR, "Run arden_live_parity.php first (missing dtf-transfers or blanks-catalog).\n");
     exit(1);
 }
 if (!$idAbout) {
-    fwrite(STDERR, "Missing CMS page about-us.\n");
+    fwrite(STDERR, "Missing CMS page about-us or about (run arden_seed_store.php).\n");
+    exit(1);
+}
+if (!$idPsvc) {
+    fwrite(STDERR, "Missing category print-services (run catalog import / arden_categories.csv).\n");
     exit(1);
 }
 
@@ -80,6 +89,7 @@ if (!$idLnkShop || !$idLnkContact) {
 $items = [
     'CAT' . $idDtf,
     'CAT' . $idBlanks,
+    'CAT' . $idPsvc,
     'LNK' . $idLnkShop,
     'CMS' . $idAbout,
     'LNK' . $idLnkContact,
