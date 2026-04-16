@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
 import { CartProvider } from "@/context/cart-context";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeaderShell } from "@/components/layout/site-header-shell";
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const instrumentSerif = Instrument_Serif({
+const dmSerif = DM_Serif_Display({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
@@ -39,10 +39,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${dmSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[var(--background)]">
         <CartProvider>
           <a href="#main-content" className="skip-link">
             Skip to content

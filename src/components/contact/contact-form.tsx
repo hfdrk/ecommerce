@@ -7,7 +7,7 @@ export function ContactForm() {
 
   return (
     <form
-      className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-6 shadow-[var(--shadow-md)] sm:p-8"
+      className="rounded-xl border border-[var(--border)] bg-white p-6 shadow-[var(--shadow-md)] sm:p-8"
       onSubmit={(e) => {
         e.preventDefault();
         setSent(true);

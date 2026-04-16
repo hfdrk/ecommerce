@@ -1,6 +1,4 @@
-import { BlankBanner } from "@/components/home/blank-banner";
 import { CategoryPillars } from "@/components/home/category-pillars";
-import { ContactStrip } from "@/components/home/contact-strip";
 import { DesignStudio } from "@/components/home/design-studio";
 import { DtfHub } from "@/components/home/dtf-hub";
 import { FeaturedProducts } from "@/components/home/featured-products";
@@ -13,13 +11,11 @@ export default function HomePage() {
     <>
       <Hero />
       <CategoryPillars />
-      <ValueProps />
       <DtfHub />
-      <BlankBanner />
       <FeaturedProducts />
       <DesignStudio />
       <Membership />
-      <ContactStrip />
+      <ValueProps />
     </>
   );
 }

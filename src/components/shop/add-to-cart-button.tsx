@@ -14,8 +14,7 @@ export function AddToCartButton({
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
-  const defaultClass =
-    "btn-primary w-full sm:w-auto sm:min-w-[220px]";
+  const defaultClass = "btn-primary w-full sm:w-auto sm:min-w-[220px]";
 
   return (
     <button

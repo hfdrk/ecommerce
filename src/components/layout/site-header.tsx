@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { mainNav } from "@/lib/navigation";
 import { useCart } from "@/context/cart-context";
 
@@ -45,12 +45,39 @@ function CartIcon({ className }: { className?: string }) {
   );
 }
 
+function PhoneIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const { itemCount } = useCart();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const isHomePage = pathname === "/";
+
+  const handleScroll = useCallback(() => {
+    setScrolled(window.scrollY > 40);
+  }, []);
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   const isActive = useMemo(
     () => (href: string, label: string) =>
@@ -58,28 +85,46 @@ export function SiteHeader() {
     [pathname, category],
   );
 
+  const isTransparent = isHomePage && !scrolled && !open;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--surface)_92%,transparent)] shadow-[var(--shadow-sm)] backdrop-blur-md supports-[backdrop-filter]:bg-[var(--surface)]/85">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isTransparent
+          ? "bg-transparent border-b border-transparent"
+          : "bg-white/95 border-b border-[var(--border)] shadow-[var(--shadow-sm)] backdrop-blur-lg"
+      }`}
+    >
+      {/* Accent top line */}
       <div
-        className="h-0.5 w-full bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-90"
+        className={`h-[2px] w-full transition-opacity duration-300 ${
+          isTransparent ? "opacity-0" : "opacity-100"
+        } bg-gradient-to-r from-[var(--accent)] via-[var(--accent-muted)] to-[var(--accent)]`}
         aria-hidden
       />
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:h-[4.25rem] sm:px-6">
-        <div className="flex min-w-0 flex-1 items-center gap-8">
+
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 sm:h-[4.5rem] sm:px-8">
+        {/* Logo */}
+        <div className="flex min-w-0 flex-1 items-center gap-10">
           <Link
             href="/"
             className="group flex min-w-0 shrink-0 flex-col"
             onClick={() => setOpen(false)}
           >
-            <span className="font-display text-[1.05rem] font-semibold tracking-[-0.02em] text-[var(--ink)] transition group-hover:text-[var(--accent)] sm:text-[1.125rem]">
+            <span
+              className={`font-display text-lg font-semibold tracking-[-0.02em] transition sm:text-xl ${
+                isTransparent
+                  ? "text-white"
+                  : "text-[var(--ink)] group-hover:text-[var(--accent)]"
+              }`}
+            >
               Arden&apos;s Print
             </span>
-            <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--accent-muted)] sm:block">
-              DTF · Blanks · POD
-            </span>
           </Link>
+
+          {/* Desktop nav */}
           <nav
-            className="hidden items-center gap-0.5 md:flex"
+            className="hidden items-center gap-1 md:flex"
             aria-label="Primary"
           >
             {mainNav.map((item) => {
@@ -88,11 +133,15 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={
+                  className={`rounded-md px-3.5 py-2 text-[13px] font-semibold transition ${
                     active
-                      ? "rounded-full bg-[color-mix(in_oklab,var(--accent)_11%,var(--muted-bg))] px-3.5 py-2 text-xs font-semibold text-[var(--accent)] ring-1 ring-[color-mix(in_oklab,var(--accent)_22%,transparent)]"
-                      : "rounded-full px-3.5 py-2 text-xs font-semibold text-[var(--muted-foreground)] transition hover:bg-[var(--muted-bg)] hover:text-[var(--ink)]"
-                  }
+                      ? isTransparent
+                        ? "bg-white/15 text-white"
+                        : "bg-[var(--accent-subtle)] text-[var(--accent)]"
+                      : isTransparent
+                        ? "text-white/80 hover:text-white hover:bg-white/10"
+                        : "text-[var(--muted-foreground)] hover:text-[var(--ink)] hover:bg-[var(--background-alt)]"
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -100,22 +149,48 @@ export function SiteHeader() {
             })}
           </nav>
         </div>
-        <div className="flex items-center gap-2">
+
+        {/* Right side */}
+        <div className="flex items-center gap-3">
+          {/* Phone - desktop only */}
+          <a
+            href="tel:+18324808080"
+            className={`hidden items-center gap-1.5 text-xs font-semibold transition lg:inline-flex ${
+              isTransparent
+                ? "text-white/75 hover:text-white"
+                : "text-[var(--muted-foreground)] hover:text-[var(--accent)]"
+            }`}
+          >
+            <PhoneIcon />
+            (832) 480-8080
+          </a>
+
+          {/* Cart */}
           <Link
             href="/cart"
-            className="relative inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[color-mix(in_oklab,var(--accent)_15%,var(--border))] bg-[var(--surface-2)] px-4 text-xs font-semibold text-[var(--accent)] shadow-[var(--shadow-sm)] transition hover:border-[color-mix(in_oklab,var(--accent)_35%,var(--border))] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+            className={`relative inline-flex h-10 items-center justify-center gap-2 rounded-lg px-4 text-xs font-semibold transition ${
+              isTransparent
+                ? "border border-white/25 text-white hover:bg-white/10"
+                : "border border-[var(--border)] bg-white text-[var(--accent)] shadow-[var(--shadow-xs)] hover:border-[var(--border-strong)]"
+            }`}
           >
             <CartIcon />
             <span className="hidden sm:inline">Cart</span>
             {itemCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white shadow-sm">
+              <span className="absolute -right-1.5 -top-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white shadow-sm ring-2 ring-white">
                 {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
           </Link>
+
+          {/* Mobile hamburger */}
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--ink)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--muted-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] md:hidden"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border transition md:hidden ${
+              isTransparent
+                ? "border-white/25 text-white hover:bg-white/10"
+                : "border-[var(--border)] bg-white text-[var(--ink)] shadow-[var(--shadow-xs)] hover:bg-[var(--background-alt)]"
+            }`}
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -135,17 +210,19 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
       <div
         id="mobile-nav"
-        className={`border-t border-[var(--border)] bg-[var(--surface)] md:hidden ${open ? "block" : "hidden"}`}
+        className={`border-t border-[var(--border)] bg-white md:hidden ${open ? "block" : "hidden"}`}
       >
-        <nav className="mx-auto max-w-6xl px-4 py-3" aria-label="Mobile">
-          <ul className="flex flex-col divide-y divide-[var(--border)] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-2)] shadow-[var(--shadow-md)]">
+        <nav className="mx-auto max-w-7xl px-5 py-3" aria-label="Mobile">
+          <ul className="flex flex-col divide-y divide-[var(--border)] overflow-hidden rounded-xl border border-[var(--border)] bg-white shadow-[var(--shadow-md)]">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="block px-4 py-3.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent-subtle)] hover:text-[var(--accent)] active:bg-[var(--accent-subtle)]"
+                  className="block px-4 py-3.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--accent-subtle)] hover:text-[var(--accent)]"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}

@@ -9,12 +9,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+    <div className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
       <p className="eyebrow">About</p>
       <h1 className="font-display mt-6 text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl sm:leading-tight">
         Built for shops that live on deadline.
       </h1>
-      <div className="mt-10 space-y-5 border-l-2 border-[color-mix(in_oklab,var(--accent)_35%,transparent)] pl-6 text-sm leading-relaxed text-[var(--muted-foreground)]">
+      <div className="mt-10 space-y-5 border-l-2 border-[var(--accent)]/25 pl-6 text-sm leading-relaxed text-[var(--muted-foreground)] sm:text-base">
         <p>
           Arden&apos;s Print focuses on predictable color, stable blank specs,
           and fulfillment you can quote with confidence. Whether you are

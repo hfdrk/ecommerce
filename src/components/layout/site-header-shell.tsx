@@ -3,16 +3,13 @@ import { SiteHeader } from "./site-header";
 
 function HeaderFallback() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[color-mix(in_oklab,var(--surface-2)_92%,transparent)] shadow-[var(--shadow-sm)] backdrop-blur-md">
-      <div
-        className="h-0.5 w-full bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-90"
-        aria-hidden
-      />
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:h-[4.25rem] sm:px-6">
-        <span className="font-display text-[1.05rem] font-semibold text-[var(--ink)] sm:text-[1.125rem]">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 shadow-[var(--shadow-sm)] backdrop-blur-lg">
+      <div className="h-[2px] w-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent-muted)] to-[var(--accent)]" aria-hidden />
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 sm:h-[4.5rem] sm:px-8">
+        <span className="font-display text-lg font-semibold text-[var(--ink)] sm:text-xl">
           Arden&apos;s Print
         </span>
-        <div className="h-10 w-24 animate-pulse rounded-full bg-[var(--muted-bg)]" />
+        <div className="h-10 w-20 animate-pulse rounded-lg bg-[var(--muted-bg)]" />
       </div>
     </header>
   );

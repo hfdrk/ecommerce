@@ -8,16 +8,14 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+    <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
       <div className="grid gap-12 lg:grid-cols-2">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
-            Contact
-          </p>
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          <p className="eyebrow">Contact</p>
+          <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">
             Let&apos;s scope your next run.
           </h1>
-          <p className="mt-4 text-sm leading-relaxed text-[var(--muted-foreground)]">
+          <p className="mt-4 text-sm leading-relaxed text-[var(--muted-foreground)] sm:text-base">
             For quotes, file checks, or rush scheduling, reach the production
             desk directly. We respond same business day for most requests.
           </p>
@@ -25,10 +23,7 @@ export default function ContactPage() {
             <div>
               <dt className="text-[var(--muted-foreground)]">Phone</dt>
               <dd className="mt-1">
-                <a
-                  href="tel:+18324808080"
-                  className="font-medium text-[var(--foreground)] hover:underline"
-                >
+                <a href="tel:+18324808080" className="font-medium text-[var(--foreground)] hover:underline">
                   (832) 480-8080
                 </a>
               </dd>
@@ -36,10 +31,7 @@ export default function ContactPage() {
             <div>
               <dt className="text-[var(--muted-foreground)]">Email</dt>
               <dd className="mt-1">
-                <a
-                  href="mailto:info@ardensprint.com"
-                  className="font-medium text-[var(--foreground)] hover:underline"
-                >
+                <a href="mailto:info@ardensprint.com" className="font-medium text-[var(--foreground)] hover:underline">
                   info@ardensprint.com
                 </a>
               </dd>
