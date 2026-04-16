@@ -1,0 +1,46 @@
+PrestaShop installer — database step (Docker)
+
+Blank "An error occurred:" on Test database connection (HTTP 500)
+-----------------------------------------------------------------
+PrestaShop 8.1.x can fatal with "Undefined constant _DB_PREFIX_" while creating
+the install session cookie: Cookie reads Configuration before the DB exists.
+
+This repo fixes it by patching install/init.php (sets _PS_DO_NOT_LOAD_CONFIGURATION_
+when app/config/parameters.php is missing):
+
+  • New setups: use the Dockerfile in this folder (`docker compose build` applies
+    the patch in the image). After `docker compose down -v`, the first copy of
+    files into the volume includes the fix.
+
+  • Already-running container with an old volume: from this directory run
+      .\apply-install-patch.ps1
+    or: docker cp patch-install-init.php arden_ps_shop:/tmp/ && docker exec arden_ps_shop php /tmp/patch-install-init.php
+
+The PHP installer runs INSIDE the "prestashop" container. There, the database
+is NOT on "localhost". You must use the Docker service name:
+
+  Database server:  mariadb
+  (alternatives that also work: database  or  mysql — same MariaDB)
+
+  Database name:    prestashop     (unless you changed MYSQL_DATABASE in .env)
+  Login:            prestashop     (unless you changed MYSQL_USER)
+  Password:         prestashop     (unless you changed MYSQL_PASSWORD)
+  Port:             3306           (or leave default if the form allows)
+  Table prefix:     ps_            (default)
+
+WRONG (will fail with DbPDO / server not found):
+  localhost
+  127.0.0.1
+  host.docker.internal
+
+If you already submitted wrong values: stop containers, remove volumes, and
+run a clean install:
+
+  docker compose down -v
+  docker compose up -d
+
+Then open the shop URL again and use the values above.
+
+Host machine tools (optional): MariaDB is published on port 3307 by default.
+Connect with 127.0.0.1:3307 and the same user/password — only for external
+SQL clients, not for the PrestaShop web installer.
