@@ -48,7 +48,7 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><circle cx="8.5" cy="15.5" r="2.5"/><path d="M3 20c0-3.87 3.13-7 7-7h4c3.87 0 7 3.13 7 7"/></svg>
       </span>
       <p class="arden-value-prop__title">{l s='Full-color prints' d='Shop.Theme.Global'}</p>
-      <p class="arden-value-prop__desc">{l s='Unlimited colors with no screen setup — photo-quality output that doesn't fade.' d='Shop.Theme.Global'}</p>
+      <p class="arden-value-prop__desc">{l s='Unlimited colors with no screen setup — photo-quality output that does not fade.' d='Shop.Theme.Global'}</p>
     </div>
     <div class="arden-value-prop">
       <span class="arden-value-prop__icon" aria-hidden="true">
